@@ -5,14 +5,14 @@ First off, THANK YOU. 
 *Note change -Final Date at McDonald- Sunday, June 2nd 2019
  
 Producer Requirements:
--Producers will form a MAB Team
--Team members will be  proxies in case producer is unable to attend spotlight events.
--Producers receive schedule or artists performing 1 week prior to spotlight event
--Producers select up to 6 musicians to Make-A-Band during spotlight events
--Once the musician begins their set, push the light button on the table if you want to pick that musician.
--If more than 1 producer “picks” a musician, it’s up to the performer to decide which producer they work with
--After all 6 members have been selected, if a selected MAB band members drops out you can choose a replacement as long as they have not been selected by any other producer.
--Practice space is available at local stages *Pending  
+- Producers will form a MAB Team
+- Team members will be  proxies in case producer is unable to attend spotlight events.
+- Producers receive schedule or artists performing 1 week prior to spotlight event
+- Producers select up to 6 musicians to Make-A-Band during spotlight events
+- Once the musician begins their set, push the light button on the table if you want to pick that musician.
+- If more than 1 producer “picks” a musician, it’s up to the performer to decide which producer they work with
+- After all 6 members have been selected, if a selected MAB band members drops out you can choose a replacement as long as they have not been selected by any other producer.
+- Practice space is available at local stages *Pending  
  
  
 Please Confirm:

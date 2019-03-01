@@ -1,2 +1,2 @@
 # make-a-band
-the app and web for making a band
+the react-native app and web app for making a band

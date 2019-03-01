@@ -1,0 +1,10 @@
+export const LOGIN_USER_SUCCESS = 'login_user_success';
+export const LOGIN_USER_START = 'login_user';
+export const CURRENT_BAND_PLAYING_UPDATE = 'current_band_playing_update';
+export const CURRENT_BAND_FETCH_SUCCESS = 'current_band_fetch_success';
+export const SELECT_DATA_ITEM = 'select_data_item';
+export const DESELECT_DATA_ITEM = 'deselect_award';
+export const TOGGLE_AWARD_VIEW = 'toggle_award_view';
+export const FETCH_ARTISTS = 'fetch_artists';
+export const FETCH_BANDS = 'fetch_bands';
+export const SELECT_AWARD = 'select_award';

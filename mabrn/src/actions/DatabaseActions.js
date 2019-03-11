@@ -1,4 +1,4 @@
-import { CURRENT_BAND_PLAYING_UPDATE, CURRENT_BAND_FETCH_SUCCESS, FETCH_ARTISTS, FETCH_BANDS } from './types';
+import { CURRENT_BAND_PLAYING_UPDATE, CURRENT_BAND_FETCH_SUCCESS, FETCH_ARTISTS, FETCH_BANDS, FETCH_SPONSORS, ADD_AWARD } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 
@@ -12,6 +12,19 @@ export const fetchArtists = () => {
 export const fetchBands = () => {
     return{
         type: FETCH_BANDS
+    };
+}
+
+export const fetchSponsors = () => {
+    return{
+        type: FETCH_SPONSORS
+    };
+}
+
+export const addAward = (awardId) => {
+    return {
+        type: ADD_AWARD,
+        payload: awardId
     };
 }
 

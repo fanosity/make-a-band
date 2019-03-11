@@ -8,3 +8,5 @@ export const TOGGLE_AWARD_VIEW = 'toggle_award_view';
 export const FETCH_ARTISTS = 'fetch_artists';
 export const FETCH_BANDS = 'fetch_bands';
 export const SELECT_AWARD = 'select_award';
+export const FETCH_SPONSORS = 'fetch_sponsors';
+export const ADD_AWARD = 'add_award';

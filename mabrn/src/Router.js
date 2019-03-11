@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import HomeView from './components/HomeView';
 import LoginPage from './components/LoginPage';
 import ListItems from './components/ListItems';
-import { Header} from './components/common';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Header } from './components/common';
+import HamburgerMenu from './components/common/HamburgerMenu';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { Scene, Router, Actions, Route, Schema } from 'react-native-router-flux';
+
+
+class RouterComponent extends Component {
 
 
 
-
-const RouterComponent = () => {
-
-
-    return (
-        <Router>
+    render(){
+        return (
+            <Router>
             {/* Our root (parent) scene */}
             <Scene key="root" hideNavBar>
                 <Scene key='auth' titleStyle={{ alignSelf: 'center', flex: 1, textAlign: 'center' }} >
-                    <Scene key='login' component={LoginPage} title="Select Event" navigationBarStyle={styles.navBarStyle} initial />
+                    <Scene key='login' component={LoginPage} title="Select Event" navigationBarStyle={styles.navBarStyle} initial
+                            onRight={() => {  }} rightButtonImage={require('./image/hamburger_menu.png')} />
                 </Scene>
                 <Scene key="main" titleStyle={{ alignSelf: 'center', flex: 1, textAlign: 'center' }} navigationBarStyle={styles.navBarStyle} title="Make A Band 2019" >
                     {/* place in renderBackButton={()=>{}} so Actions.main({onBack: () => {...}}) will work. */}
@@ -25,8 +28,11 @@ const RouterComponent = () => {
                 </Scene>
             </Scene>
         </Router>
-    );
-};
+        );
+    }
+}
+                 
+
 
 const styles = {
     textStyle: {
@@ -34,10 +40,10 @@ const styles = {
     },
     navBarStyle:{
         backgroundColor: '#3d819f',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        height: 60,
-        paddingTop: 15,
+        height: 50,
+        paddingTop: 8,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2},
         shadowOpacity: 0.3,
@@ -45,6 +51,5 @@ const styles = {
         position: 'relative'
     }
 };
-
 
 export default RouterComponent;

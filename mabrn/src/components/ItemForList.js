@@ -3,7 +3,7 @@ import { Text, TouchableWithoutFeedback, View,
          LayoutAnimation, NativeModules, ImageBackground } from 'react-native';
 import { Placemat, Button, Banner } from './common';
 import { connect } from 'react-redux';
-import { selectDataItem, toggleAwardPopup } from '../actions';
+import { selectDataItem, toggleAwardPopup, selectAward } from '../actions';
 import * as images from '../image';
 
 
@@ -13,8 +13,61 @@ UIManager.setLayoutAnimationEnabledExperimental &&
 
 class ItemForList extends Component{
 
+    state = {awardGiven: false, awardGivenString: ""}
+
     componentWillUpdate() {
         LayoutAnimation.easeInEaseOut();
+    }
+
+    componentWillReceiveProps(nextProps){
+        const currentPage = this.props.dataState.currentPage;
+        if (currentPage in this.props.dataState.givenAwards)
+        {
+            const thisItemId = this.props.data.id;
+            if (thisItemId in this.props.dataState.givenAwards[currentPage]){
+                this.setState({awardGiven: true});
+                const currentPageStringSingular = this.props.dataState.currentPage.substring(0, this.props.dataState.currentPage.length - 1);
+                this.setState({awardGivenString: `You have awarded this ${currentPageStringSingular}`});
+            }
+            else{
+                this.setState({awardGiven: false});
+            }
+        }
+    }
+
+    onAwardPressed(){
+        this.props.toggleAwardPopup(true);
+    }
+
+    onAwardChangePressed(){
+
+    }
+
+    renderAwardSection(){
+        const { awardGiven } = this.state;
+        if (awardGiven){
+            return( 
+                <Placemat style={{bottom: 0, position: 'relative', height: 80}}>
+                    <Placemat style={{flex: 2}}>
+                        <Text style={styles.awardAlreadyGivenTextStyle}>{this.state.awardGivenString}</Text>
+                    </Placemat>
+                    <Button buttonStyleProp={{backgroundColor: '#2c708e', flex: 1, height: 50, alignSelf: 'center'}} onPress={this.onAwardChangePressed.bind(this)}>
+                            Change Award
+                    </Button>
+                </Placemat>
+                
+            );
+                    
+        }
+        else{
+            return (
+                <Placemat style={{bottom: 0, position: 'relative'}}>
+                    <Button buttonStyleProp={styles.awardButtonStyle} onPress={this.onAwardPressed.bind(this)}>
+                            Award
+                    </Button>
+                </Placemat>
+            );
+        }
     }
 
 
@@ -33,12 +86,7 @@ class ItemForList extends Component{
                             {bio}
                         </Text>
                     </Placemat>
-                    <Placemat style={{bottom: 0, position: 'relative'}}>
-                        <Button buttonStyleProp={styles.awardButtonStyle} 
-                                onPress={() => this.props.toggleAwardPopup(true) }>
-                            Award
-                        </Button>
-                    </Placemat>
+                    {this.renderAwardSection()}
                 </View>
                 
             );
@@ -67,7 +115,7 @@ class ItemForList extends Component{
 
 const styles = {
     awardButtonStyle:{
-        backgroundColor: "#2c708e"
+        backgroundColor: '#2c708e'
     },
     bioTextStyle:{
         fontSize: 16,
@@ -78,6 +126,11 @@ const styles = {
         fontSize: 20,
         paddingLeft: 8,
         color: '#ddd'
+    },
+    awardAlreadyGivenTextStyle:{
+        fontSize: 18,
+        paddingLeft: 8,
+        color: '#ddd'
     }
 };
 
@@ -86,7 +139,8 @@ const styles = {
 // doing calculation is mapStateToProps() is more efficient than in the component itself.
 // the state argument received by mapStateToProps is the state returned by the reducer.
 const mapStateToProps = (state, ownProps) => {
-    return { expanded: state.selectedDataItem.id  === ownProps.data.id};
+
+    return { expanded: state.selectedDataItem.id  === ownProps.data.id, dataState: state.data};
 };
 
 // use the connect() helper to call an action creator.
@@ -94,4 +148,4 @@ const mapStateToProps = (state, ownProps) => {
 // Takes the action creators, and whenever they are called, make sure they go to the right place.
 // Then, pass these actions into the component (the component in this case is Item) as props.
 // Now our Item will have props.actions (as well as props.library which was set in LibraryList).
-export default connect(mapStateToProps, {selectDataItem, toggleAwardPopup})(ItemForList);
+export default connect(mapStateToProps, {selectDataItem, toggleAwardPopup, selectAward})(ItemForList);

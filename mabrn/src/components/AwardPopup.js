@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Modal, FlatList, TouchableHighlight } from 'react-native';
 import { Placemat, Button } from './common';
 import { connect } from 'react-redux';
-import { toggleAwardPopup } from '../actions';
+import { toggleAwardPopup, addAward, selectAward } from '../actions';
 import awards from '../data/Awards.json';
 import ListItemSelectable from './ListItemSelectable';
 
@@ -10,21 +10,17 @@ import ListItemSelectable from './ListItemSelectable';
 class AwardPopup extends Component{
 
 
-    state = { visible: false }
-
     componentWillReceiveProps(nextProps){
-        this.setState({ visible: nextProps.visible})
-        console.log(nextProps);
+        
     }
 
     onCancel(){
         this.props.toggleAwardPopup(false);
-        this.setState({visible: false});
     }
 
-    onConfirm(){
+    onAwardConfirm(){
         this.props.toggleAwardPopup(false);
-        this.setState({visible: false});
+        this.props.addAward(this.props.selectedAwardId);
     }
 
 
@@ -40,7 +36,7 @@ class AwardPopup extends Component{
             <Modal
                 animationType="slide"
                 transparent
-                visible={this.state.visible}
+                visible={this.props.visible}
                 onRequestClose={() => {}}>
                 <View style={containerStyle}>
                     <Placemat style={placematStyle}>
@@ -60,7 +56,7 @@ class AwardPopup extends Component{
                             Cancel
                         </Button> 
                         
-                        <Button onPress={this.onConfirm.bind(this)} buttonStyleProp={awardButtonStyle}>
+                        <Button onPress={this.onAwardConfirm.bind(this)} buttonStyleProp={awardButtonStyle}>
                             Award
                         </Button>
                     </Placemat>
@@ -96,7 +92,7 @@ const styles = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    return {visible: state.awardVisible};
+    return {visible: state.awardVisible, selectedAwardId: state.selectedAwardId};
 };
 
-export default connect(mapStateToProps, { toggleAwardPopup })(AwardPopup);
+export default connect(mapStateToProps, { toggleAwardPopup, addAward, selectAward })(AwardPopup);

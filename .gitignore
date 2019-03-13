@@ -63,3 +63,9 @@ typings/
 *.DS_Store
 gradle.properties
 *.keystore
+
+mabrn/android/app/build/intermediates/
+mabrn/android/.gradle/
+mabrn/android/app/build/generated/
+mabrn/android/app/.project/
+mabrn/android/app/.settings/

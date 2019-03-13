@@ -22,7 +22,7 @@ class RouterComponent extends Component {
             <Stack key="root" titleStyle={{ alignSelf: 'center' }} hideNavBar>
                     <Drawer key="drawer" hideNavBar contentComponent={DrawerContent} drawerImage={MenuIcon} drawerWidth={250} drawerPosition="right">
                         <Stack key='auth' titleStyle={{ alignSelf: 'center', flex: 1, textAlign: 'center' }} >
-                            <Scene key='login' component={LoginPage} title="Select Event" navigationBarStyle={styles.navBarStyle} />
+                            <Scene key='login' component={LoginPage} initial title="Select Event" navigationBarStyle={styles.navBarStyle} />
                         </Stack>
 
                         <Stack key="main" titleStyle={{ alignSelf: 'center', flex: 1, textAlign: 'center' }} navigationBarStyle={styles.navBarStyle} title="Make A Band 2019" >
@@ -45,15 +45,12 @@ const styles = {
     },
     navBarStyle:{
         backgroundColor: '#3d819f',
-        justifyContent: 'space-between',
-        alignItems: 'center',
         height: 50,
         paddingTop: 8,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2},
         shadowOpacity: 0.3,
-        elevation: 2,
-        position: 'relative'
+        elevation: 2
     }
 };
 

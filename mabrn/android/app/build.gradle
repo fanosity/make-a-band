@@ -98,20 +98,11 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.mabrn"
+        applicationId "com.buildtest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-    }
-    allprojects {
-        // Workaround for https://issuetracker.google.com/117900475
-        // Remove when upgrading to AGP 3.4 or higher.
-        configurations.matching { it.name == '_internal_aapt2_binary' }.all { config ->
-            config.resolutionStrategy.eachDependency { details ->
-                details.useVersion("3.5.0-alpha03-5252756")
-            }
-        }
     }
     signingConfigs {
         release {
@@ -154,6 +145,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules

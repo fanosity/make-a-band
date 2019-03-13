@@ -1,5 +1,5 @@
 {
-  "name": "mabrn",
+  "name": "buildTest",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,11 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
-    "firebase": "^5.8.4",
-    "lodash": "^4.17.11",
-    "react": "16.6.3",
-    "react-native": "0.58.5",
+    "firebase": "^5.8.6",
+    "react": "^16.8.3",
+    "react-native": "^0.59.0",
     "react-native-drawer": "^2.5.1",
+    "react-native-firebase": "^5.2.3",
     "react-native-router-flux": "^4.0.6",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",

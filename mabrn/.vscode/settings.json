@@ -1,4 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "git.ignoreLimitWarning": true
 }

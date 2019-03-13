@@ -8,11 +8,12 @@ import ListItemSelectable from './ListItemSelectable';
 
 // receive the children prop passed to Confirm
 class AwardPopup extends Component{
-
-
-    componentWillReceiveProps(nextProps){
-        
-    }
+    
+    // componentWillReceiveProps(nextProps){
+    //     console.log("\tin popup. Visible: " + nextProps.visible + "  selected award: " + nextProps.selectedAwardId);
+    //     console.log(nextProps);
+    //     this.setState({visible: nextProps.visible, selectedAwardId: nextProps.selectedAwardId});
+    // }
 
     onCancel(){
         this.props.toggleAwardPopup(false);

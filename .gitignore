@@ -64,11 +64,15 @@ typings/
 gradle.properties
 *.keystore
 
-mabrn/android/app/build/intermediates/
+mabrn/android/app/build/
 mabrn/android/.gradle/
 mabrn/android/app/build/generated/
+mabrn/android/app/build/outputs/
+mabrn/android/app/build/reports/
 mabrn/android/app/.project/
 mabrn/android/app/.settings/
+mabrn/ios/build/
+
 
 *.apk
 local.properties

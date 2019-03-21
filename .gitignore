@@ -69,3 +69,6 @@ mabrn/android/.gradle/
 mabrn/android/app/build/generated/
 mabrn/android/app/.project/
 mabrn/android/app/.settings/
+
+*.apk
+local.properties

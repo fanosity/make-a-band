@@ -19,20 +19,21 @@ class ItemForList extends Component{
         LayoutAnimation.easeInEaseOut();
     }
 
+    // Used to be the place that managed 'awardGiven' state bool when redux change was made
     componentWillReceiveProps(nextProps){
-        const currentPage = this.props.dataState.currentPage;
-        if (currentPage in this.props.dataState.givenAwards)
-        {
-            const thisItemId = this.props.data.id;
-            if (thisItemId in this.props.dataState.givenAwards[currentPage]){
-                this.setState({awardGiven: true});
-                const currentPageStringSingular = this.props.dataState.currentPage.substring(0, this.props.dataState.currentPage.length - 1);
-                this.setState({awardGivenString: `You have awarded this ${currentPageStringSingular}`});
-            }
-            else{
-                this.setState({awardGiven: false});
-            }
-        }
+        // const currentPage = this.props.dataState.currentPage;
+        // if (currentPage in this.props.dataState.givenAwards)
+        // {
+        //     const thisItemId = this.props.data.id;
+        //     if (thisItemId in this.props.dataState.givenAwards[currentPage]){
+        //         this.setState({awardGiven: true});
+        //         const currentPageStringSingular = this.props.dataState.currentPage.substring(0, this.props.dataState.currentPage.length - 1);
+        //         this.setState({awardGivenString: `You have awarded this ${currentPageStringSingular}`});
+        //     }
+        //     else{
+        //         this.setState({awardGiven: false});
+        //     }
+        // }
     }
 
     onAwardPressed(){
@@ -44,6 +45,8 @@ class ItemForList extends Component{
     }
 
     renderAwardSection(){
+        // sig: instead of getting awardGiven from this.state, we could make an api call which gets info 
+        // on what the user awarded this item (band or artist), if any award was given.
         const { awardGiven } = this.state;
         if (awardGiven){
             return( 

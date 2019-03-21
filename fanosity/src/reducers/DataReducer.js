@@ -1,8 +1,8 @@
-import { FETCH_ARTISTS, FETCH_BANDS, FETCH_SPONSORS, ADD_AWARD } from '../actions/types';
+import { FETCH_ARTISTS, FETCH_BANDS, FETCH_SPONSORS } from '../actions/types';
 import artists from '../data/Artists.json';
 import bands from '../data/Bands.json';
 
-const INITIAL_STATE = {data: [], currentPage: "", givenAwards: {}}
+const INITIAL_STATE = {data: [], currentPage: ""}
 
 export default (state = INITIAL_STATE, action) => {
     switch(action.type)
@@ -13,16 +13,6 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, data: bands, currentPage: "bands"};
         case FETCH_SPONSORS:
             return {...state, data: [], currentPage: "sponsors"};
-        case ADD_AWARD:
-            if (state.currentPage !== "")
-            {
-                if (!(state.currentPage in state.givenAwards))
-                {
-                    state.givenAwards[state.currentPage] = [];
-                }
-                state.givenAwards[state.currentPage].push(action.payload);
-            }
-            return {...state }
         default:
             return state;
     }

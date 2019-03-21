@@ -3,13 +3,13 @@ import { FlatList, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import ItemForList from './ItemForList';
 import AwardPopup from './AwardPopup';
-import { deselectDataItem } from '../actions';
+import { selectDataItem } from '../actions';
 
 
 class ListItems extends Component {
 
     componentWillMount(){
-        this.props.deselectDataItem();
+        this.props.selectDataItem(-1);
     }
 
     componentWillReceiveProps(nextProps){
@@ -19,6 +19,7 @@ class ListItems extends Component {
         return <ItemForList data={data.item} />;
     }
 
+    // The header for the award popup. Displays text like: "Award greatBand:"
     renderAwardTitle(){
         const awardText = "Award ";
         return (
@@ -75,4 +76,4 @@ const mapStateToProps = state => {
 };
 
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
-export default connect(mapStateToProps, { deselectDataItem } )(ListItems);
+export default connect(mapStateToProps, { selectDataItem } )(ListItems);

@@ -1,25 +1,60 @@
 import React, { Component } from "react";
+import { NowPlayingBottomBar, BaseView } from "./common";
 import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
-import { selectDataItem, deselectDataItem } from "../actions";
+import { currentBandFetch, fetchBands, selectDataItem, deselectDataItem } from "../actions";
+import { Actions } from "react-native-router-flux";
 
 class ListItems extends Component {
     componentWillMount() {
-        const initialItem = this.props.data.find(b => b.id == this.props.scrollTo);
+        var initialItem = this.props.data.find(b => b.id == this.props.scrollTo);
+
         if (initialItem != null) {
             this.props.deselectDataItem();
             this.props.selectDataItem(initialItem);
         } else {
             this.props.deselectDataItem();
         }
-    }
 
-    componentWillReceiveProps(nextProps) {}
+        this.props.currentBandFetch();
+        this.manageCurrentBand(this.props);
+    }
+    componentWillReceiveProps(nextProps) {
+        this.manageCurrentBand(nextProps);
+    }
 
     componentDidMount() {
         // if (this.props.scrollTo != null) this.flatListRef.scrollToIndex({ animated: true, index: this.props.scrollTo });
+    }
+
+    manageCurrentBand({ currentBand }) {
+        this.currentBand = currentBand;
+    }
+
+    onNowPlayingPressed() {
+        // Using id = 6 until api is fleshed out. Replace with grab of current band id.
+
+        // Needs to be a better way of identifying what's being displayed currently.
+        if (this.props.title !== "Bands") {
+            this.props.fetchBands();
+
+            // FIXME: For some reason none of these fully reset the page.
+            // Actions.jump("listData", { title: "Bands", scrollTo: 6 });
+            // Actions.popAndPush("listData", { title: "Bands", scrollTo: 6 });
+            Actions.refresh({ title: "Bands", scrollTo: 6 });
+        }
+        let scrollTo = 6;
+
+        this.scrollToIndex(scrollTo);
+        this.props.deselectDataItem();
+        this.props.selectDataItem(this.props.data.find(b => b.id == scrollTo));
+    }
+
+    scrollToIndex(id) {
+        if (id != null)
+            this.flatListRef.scrollToIndex({ animated: true, index: this.props.data.findIndex(band => band.id == id) });
     }
 
     renderItem(data) {
@@ -39,24 +74,29 @@ class ListItems extends Component {
 
     render() {
         return (
-            <View onLayout={() => this.onLayout()}>
-                <FlatList
-                    data={this.props.data}
-                    renderItem={this.renderItem}
-                    keyExtractor={data => data.id.toString()}
-                    ref={ref => {
-                        this.flatListRef = ref;
-                    }}
-                    initialNumToRender={this.props.data.length}
-                    // initialScrollIndex={this.props.scrollTo}
-                />
-                <AwardPopup>{this.renderAwardTitle()}</AwardPopup>
-            </View>
+            <BaseView baseViewStyle={{ backgroundColor: "#ddd" }}>
+                <View /*onLayout={() => this.onLayout()}*/ style={{ flex: 6 }}>
+                    <FlatList
+                        data={this.props.data}
+                        renderItem={this.renderItem}
+                        keyExtractor={data => data.id.toString()}
+                        ref={ref => {
+                            this.flatListRef = ref;
+                        }}
+                        initialNumToRender={this.props.data.length}
+                        initialScrollIndex={this.props.scrollTo}
+                    />
+                    <AwardPopup>{this.renderAwardTitle()}</AwardPopup>
+                </View>
+                <NowPlayingBottomBar bandName={this.currentBand} onPress={this.onNowPlayingPressed.bind(this)}>
+                    Now playing:
+                </NowPlayingBottomBar>
+            </BaseView>
         );
     }
 
     onLayout() {
-        if (this.props.scrollTo != null) this.flatListRef.scrollToIndex({ animated: true, index: this.props.scrollTo });
+        this.scrollToIndex(this.props.scrollTo);
     }
 }
 
@@ -79,11 +119,12 @@ const styles = {
 };
 
 const mapStateToProps = state => {
-    return { data: state.data.data, selectedDataItem: state.selectedDataItem };
+    const { currentBand } = state.band;
+    return { currentBand, data: state.data.data, selectedDataItem: state.selectedDataItem };
 };
 
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default connect(
     mapStateToProps,
-    { selectDataItem, deselectDataItem }
+    { currentBandFetch, fetchBands, selectDataItem, deselectDataItem }
 )(ListItems);

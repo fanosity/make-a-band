@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { NowPlayingBottomBar, BaseView, Placemat, Button } from "./common";
+import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
-import { currentBandFetch, fetchArtists, fetchBands, fetchSponsors } from "../actions";
+import { currentBandFetch, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
@@ -37,9 +37,9 @@ class HomeView extends Component {
     }
 
     onNowPlayingPressed() {
-        // Using id = 3 until api is fleshed out.
+        // Using id = 6 until api is fleshed out. Replace with grab of current band id.
         this.props.fetchBands();
-        Actions.listData({ title: "Bands", scrollTo: 3 });
+        Actions.listData({ title: "Bands", scrollTo: 6 });
     }
 
     render() {
@@ -138,10 +138,10 @@ const styles = {
 
 const mapStateToProps = state => {
     const { currentBand } = state.band;
-    return { currentBand };
+    return { currentBand, data: state.data.data };
 };
 
 export default connect(
     mapStateToProps,
-    { currentBandFetch, fetchArtists, fetchBands, fetchSponsors }
+    { currentBandFetch, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ }
 )(HomeView);

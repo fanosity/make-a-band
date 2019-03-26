@@ -5,6 +5,7 @@ import {
     FETCH_BANDS,
     FETCH_SPONSORS,
     ADD_AWARD
+    // GET_BAND_INDEX_BY_ID
 } from "./types";
 import firebase from "firebase";
 import { Actions } from "react-native-router-flux";
@@ -20,6 +21,13 @@ export const fetchBands = () => {
         type: FETCH_BANDS
     };
 };
+
+// export const getBandIndexById = bandId => {
+//     return {
+//         type: GET_BAND_INDEX_BY_ID,
+//         payload: bandId
+//     };
+// };
 
 export const fetchSponsors = () => {
     return {

@@ -9,7 +9,7 @@ import { Actions } from "react-native-router-flux";
 
 class ListItems extends Component {
     componentWillMount() {
-        var initialItem = this.props.data.find(b => b.id == this.props.scrollTo);
+        var initialItem = this.props.data.find(item => item.id == this.props.scrollTo);
 
         if (initialItem != null) {
             this.props.deselectDataItem();
@@ -49,12 +49,12 @@ class ListItems extends Component {
 
         this.scrollToIndex(scrollTo);
         this.props.deselectDataItem();
-        this.props.selectDataItem(this.props.data.find(b => b.id == scrollTo));
+        this.props.selectDataItem(this.props.data.find(item => item.id == scrollTo));
     }
 
     scrollToIndex(id) {
         if (id != null)
-            this.flatListRef.scrollToIndex({ animated: true, index: this.props.data.findIndex(band => band.id == id) });
+            this.flatListRef.scrollToIndex({ animated: true, index: this.props.data.findIndex(item => item.id == id) });
     }
 
     renderItem(data) {

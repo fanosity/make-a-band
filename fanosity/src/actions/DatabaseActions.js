@@ -4,7 +4,8 @@ import {
     FETCH_ARTISTS,
     FETCH_BANDS,
     FETCH_SPONSORS,
-    ADD_AWARD
+    ADD_AWARD,
+    GET_CURRENT_BAND
     // GET_BAND_INDEX_BY_ID
 } from "./types";
 import firebase from "firebase";
@@ -55,3 +56,10 @@ export const currentBandFetch = () => {
             });
     };
 };
+
+export const getCurrentBand = () => {
+    return {
+        type: GET_CURRENT_BAND,
+        payload: 6 // Replace with api call.
+    }
+}

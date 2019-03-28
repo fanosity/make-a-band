@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
-import { currentBandFetch, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ } from "../actions";
+import { currentBandFetch, getCurrentBand, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
     componentWillMount() {
-        this.props.currentBandFetch();
+        // this.props.currentBandFetch();
+        this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
+
     }
 
     componentWillUpdate() {}
@@ -99,7 +101,7 @@ class HomeView extends Component {
                     </View>
                 </View>
 
-                <NowPlayingBottomBar bandName={this.currentBand} onPress={this.onNowPlayingPressed.bind(this)}>
+                <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
                     Now playing:
                 </NowPlayingBottomBar>
             </BaseView>
@@ -143,5 +145,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { currentBandFetch, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ }
+    { currentBandFetch, getCurrentBand, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ }
 )(HomeView);

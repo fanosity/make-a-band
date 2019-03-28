@@ -4,7 +4,7 @@ import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
-import { currentBandFetch, fetchBands, selectDataItem, deselectDataItem } from "../actions";
+import { currentBandFetch, getCurrentBand, fetchBands, selectDataItem, deselectDataItem } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class ListItems extends Component {
@@ -18,7 +18,8 @@ class ListItems extends Component {
             this.props.deselectDataItem();
         }
 
-        this.props.currentBandFetch();
+        // this.props.currentBandFetch();
+        this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
     }
     componentWillReceiveProps(nextProps) {
@@ -43,9 +44,9 @@ class ListItems extends Component {
             // FIXME: For some reason none of these fully reset the page.
             // Actions.jump("listData", { title: "Bands", scrollTo: 6 });
             // Actions.popAndPush("listData", { title: "Bands", scrollTo: 6 });
-            Actions.refresh({ title: "Bands", scrollTo: 6 });
+            Actions.refresh({ title: "Bands", scrollTo: this.currentBand.id });
         }
-        let scrollTo = 6;
+        let scrollTo = this.currentBand.id;
 
         this.scrollToIndex(scrollTo);
         this.props.deselectDataItem();
@@ -88,7 +89,7 @@ class ListItems extends Component {
                     />
                     <AwardPopup>{this.renderAwardTitle()}</AwardPopup>
                 </View>
-                <NowPlayingBottomBar bandName={this.currentBand} onPress={this.onNowPlayingPressed.bind(this)}>
+                <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
                     Now playing:
                 </NowPlayingBottomBar>
             </BaseView>
@@ -126,5 +127,5 @@ const mapStateToProps = state => {
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default connect(
     mapStateToProps,
-    { currentBandFetch, fetchBands, selectDataItem, deselectDataItem }
+    { currentBandFetch, getCurrentBand, fetchBands, selectDataItem, deselectDataItem }
 )(ListItems);

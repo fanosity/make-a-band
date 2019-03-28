@@ -4,19 +4,36 @@ import { View, Text, Dimensions, Image, TouchableOpacity } from "react-native";
 const NowPlayingBottomBar = ({ onPress, children, bandName }) => {
     const { headerTextStyle, bandNameTextStyle, containerStyle } = styles;
     return (
-        <View style={containerStyle}>
-            <TouchableOpacity style={{ flex: 1, alignSelf: "center", padding: 5 }} onPress={onPress}>
+        <TouchableOpacity style={containerStyle} onPress={onPress}>
+            {/* <View style={containerStyle}> */}
+            {/* <TouchableOpacity style={{ flex: 1, alignSelf: "center", padding: 5 }} onPress={onPress}>
                 <Image
                     style={{ resizeMode: "stretch", height: 80 }}
                     source={require("../../image/example_band_thumbnail.png")}
                 />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <View style={{ flex: 1, alignSelf: "center", padding: 5 }}>
+                <Image
+                    style={{
+                        resizeMode: "stretch",
+                        height: 80
+                    }}
+                    source={require("../../image/example_band_thumbnail.png")}
+                />
+            </View>
 
-            <View style={{ flexDirection: "column", flex: 3, justifyContent: "center" }}>
+            <View
+                style={{
+                    flexDirection: "column",
+                    flex: 3,
+                    justifyContent: "center"
+                }}
+            >
                 <Text style={headerTextStyle}>{children}</Text>
                 <Text style={bandNameTextStyle}>{bandName}</Text>
             </View>
-        </View>
+            {/* </View> */}
+        </TouchableOpacity>
     );
 };
 

@@ -54,5 +54,11 @@
         "desc": "Death Metal",
         "bio": "This will be a magnificent bio full of words. Big words, great words. The best words anyone has ever seen, believe me. I know guy who make the most beautiful words, and it's going to be great.",
         "image": "DETHKLOK_EXAMPLE"
-    }
-]
+    },
+    {
+        "id": 8,
+        "title": "Twenty Two Engineers",
+        "desc": "Polka Screamo",
+        "bio": "This will be a magnificent bio full of words. Big words, great words. The best words anyone has ever seen, believe me. I know guy who make the most beautiful words, and it's going to be great.",
+        "image": "BAND_EXAMPLE_1"
+    }]

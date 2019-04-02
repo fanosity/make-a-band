@@ -60,6 +60,6 @@ export const currentBandFetch = () => {
 export const getCurrentBand = () => {
     return {
         type: GET_CURRENT_BAND,
-        payload: 6 // Replace with api call.
-    }
-}
+        payload: 8 // Replace with api call.
+    };
+};

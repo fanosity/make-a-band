@@ -46,16 +46,15 @@ class ListItems extends Component {
             // Actions.popAndPush("listData", { title: "Bands", scrollTo: 6 });
             Actions.refresh({ title: "Bands", scrollTo: this.currentBand.id });
         }
-        let scrollTo = this.currentBand.id;
-
-        this.scrollToIndex(scrollTo);
-        this.props.deselectDataItem();
-        this.props.selectDataItem(this.props.data.find(item => item.id == scrollTo));
+        this.scrollToIndex(this.currentBand.id);
     }
 
     scrollToIndex(id) {
-        if (id != null)
+        if (id != null) {
+            this.props.deselectDataItem();
+            this.props.selectDataItem(this.props.data.find(item => item.id == id));
             this.flatListRef.scrollToIndex({ animated: true, index: this.props.data.findIndex(item => item.id == id) });
+        }
     }
 
     renderItem(data) {

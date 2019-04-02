@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NowPlayingBottomBar, BaseView } from "./common";
+import { BandsList, ArtistsList, SponsorsList, NowPlayingBottomBar, BaseView } from "./common";
 import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
@@ -71,6 +71,16 @@ class ListItems extends Component {
                 <Text style={styles.awardTextStyle}>:</Text>
             </View>
         );
+    }
+
+    renderList() {
+        if (this.props.page == "band") {
+            return <BandsList data={this.props.data} />;
+        } else if (this.props.page == "artist") {
+            return <ArtistsList data={this.props.data} />;
+        } else if (this.props.page == "sponsor") {
+            return <SponsorsList data={this.props.data} />;
+        }
     }
 
     render() {

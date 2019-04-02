@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
-import { currentBandFetch, getCurrentBand, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ } from "../actions";
+import {
+    currentBandFetch,
+    getCurrentBand,
+    fetchArtists,
+    fetchBands,
+    fetchSponsors /*, getBandIndexById */
+} from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
@@ -10,7 +16,6 @@ class HomeView extends Component {
         // this.props.currentBandFetch();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
-
     }
 
     componentWillUpdate() {}
@@ -25,23 +30,23 @@ class HomeView extends Component {
 
     onBandsPressed() {
         this.props.fetchBands();
-        Actions.listData({ title: "Bands" });
+        Actions.listData({ title: "Bands", page: "band" });
     }
 
     onArtistsPressed() {
         this.props.fetchArtists();
-        Actions.listData({ title: "Artists" });
+        Actions.listData({ title: "Artists", page: "artist" });
     }
 
     onSponsorsPressed() {
         this.props.fetchSponsors();
-        Actions.listData({ title: "Sponsors" });
+        Actions.listData({ title: "Sponsors", page: "sponsor" });
     }
 
     onNowPlayingPressed() {
         // Using id = 6 until api is fleshed out. Replace with grab of current band id.
         this.props.fetchBands();
-        Actions.listData({ title: "Bands", scrollTo: 6 });
+        Actions.listData({ title: "Bands", page: "band", scrollTo: 6 });
     }
 
     render() {

@@ -6,8 +6,11 @@ import reducers from './src/reducers';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import Router from './src/Router';
+import { SharedSnackbarProvider } from './src/context/SharedSnackbar';
 
 class App extends Component {
+
+    state = {number: 11 }
 
     componentWillMount(){
         console.disableYellowBox = true;
@@ -23,12 +26,16 @@ class App extends Component {
 
     }
 
+    
     render() {
         // wireup redux thunk. The 2nd arg is any initial state we want to pass in. Optional. Usually used for server-side rendering.
         return(
-            <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-                <Router/>
-            </Provider>
+
+            <SharedSnackbarProvider>
+                <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+                    <Router/>
+                </Provider>
+            </SharedSnackbarProvider>
         );
     }
 }

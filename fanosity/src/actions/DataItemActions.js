@@ -10,12 +10,12 @@
     };
 };
 
-export const toggleAwardPopup = (visible) => {
-    return{
-        type: TOGGLE_AWARD_VIEW,
-        payload: visible
-    };
-};
+// export const toggleAwardPopup = (visible) => {
+//     return{
+//         type: TOGGLE_AWARD_VIEW,
+//         payload: visible
+//     };
+// };
 
 export const selectAward = (awardId) => {
     return {

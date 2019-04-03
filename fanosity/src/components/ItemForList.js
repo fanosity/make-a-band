@@ -3,7 +3,7 @@ import { Text, TouchableWithoutFeedback, View,
          LayoutAnimation, NativeModules, ImageBackground } from 'react-native';
 import { Placemat, Button, Banner } from './common';
 import { connect } from 'react-redux';
-import { selectDataItem, toggleAwardPopup, selectAward } from '../actions';
+import { selectDataItem, selectAward } from '../actions';
 import * as images from '../image';
 
 
@@ -37,7 +37,7 @@ class ItemForList extends Component{
     }
 
     onAwardPressed(){
-        this.props.toggleAwardPopup(true);
+        // this.props.toggleAwardPopup(true);
     }
 
     onAwardChangePressed(){
@@ -65,7 +65,7 @@ class ItemForList extends Component{
         else{
             return (
                 <Placemat style={{bottom: 0, position: 'relative'}}>
-                    <Button buttonStyleProp={styles.awardButtonStyle} onPress={this.onAwardPressed.bind(this)}>
+                    <Button buttonStyleProp={styles.awardButtonStyle} onPress={this.onAwardPressed.bind(this)} >
                             Award
                     </Button>
                 </Placemat>
@@ -151,4 +151,4 @@ const mapStateToProps = (state, ownProps) => {
 // Takes the action creators, and whenever they are called, make sure they go to the right place.
 // Then, pass these actions into the component (the component in this case is Item) as props.
 // Now our Item will have props.actions (as well as props.library which was set in LibraryList).
-export default connect(mapStateToProps, {selectDataItem, toggleAwardPopup, selectAward})(ItemForList);
+export default connect(mapStateToProps, {selectDataItem, selectAward})(ItemForList);

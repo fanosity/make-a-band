@@ -1,8 +1,9 @@
 import { FETCH_ARTISTS, FETCH_BANDS, FETCH_SPONSORS } from '../actions/types';
 import artists from '../data/Artists.json';
 import bands from '../data/Bands.json';
+import awards from '../data/Awards.json';
 
-const INITIAL_STATE = {data: [], currentPage: ""}
+const INITIAL_STATE = {data: [], currentPage: "", awards}
 
 export default (state = INITIAL_STATE, action) => {
     switch(action.type)

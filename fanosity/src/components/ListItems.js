@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ItemForList from './ItemForList';
 import AwardPopup from './AwardPopup';
 import { selectDataItem } from '../actions';
+import { SharedSnackbarConsumer } from '../context/SharedSnackbar';
 
 
 class ListItems extends Component {
@@ -45,9 +46,13 @@ class ListItems extends Component {
                     renderItem={this.renderItem}
                     keyExtractor={(data) => data.id.toString()}
                 />
-            <AwardPopup>
-                {this.renderAwardTitle()}
-            </AwardPopup>
+                <SharedSnackbarConsumer>
+                    {({ openSnackbar }) => (
+                        <AwardPopup open={openSnackbar}>
+                            {this.renderAwardTitle()}
+                        </AwardPopup>
+                    )}
+                </SharedSnackbarConsumer>
             </View>
         );
     }

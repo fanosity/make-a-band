@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Modal, FlatList, TouchableHighlight } from 'react-native';
 import { Placemat, Button } from './common';
 import { connect } from 'react-redux';
-import { toggleAwardPopup, selectAward } from '../actions';
+import { selectAward } from '../actions';
 import awards from '../data/Awards.json';
 import ListItemSelectable from './ListItemSelectable';
 
@@ -16,11 +16,11 @@ class AwardPopup extends Component{
     // }
 
     onCancel(){
-        this.props.toggleAwardPopup(false);
+        // this.props.toggleAwardPopup(false);
     }
 
     onAwardConfirm(){
-        this.props.toggleAwardPopup(false);
+        // this.props.toggleAwardPopup(false);
         // sig: Here would be the best place to make an api call to add an award to a band or artist.
         // We might also want to save the award action locally so given awards can be displayed without a get request per band/artist?
         console.log("add award to: " + this.props.selectedAwardId);
@@ -32,9 +32,11 @@ class AwardPopup extends Component{
             <ListItemSelectable data={data} />
         ); 
     }
+
     
     render(){
         const { containerStyle, placematStyle, placematOptionsStyle, awardButtonStyle } = styles;
+        const { open } = this.props;
         return (
             <Modal
                 animationType="slide"
@@ -59,7 +61,7 @@ class AwardPopup extends Component{
                             Cancel
                         </Button> 
                         
-                        <Button onPress={this.onAwardConfirm.bind(this)} buttonStyleProp={awardButtonStyle}>
+                        <Button onPress={open} buttonStyleProp={awardButtonStyle}>
                             Award
                         </Button>
                     </Placemat>
@@ -98,4 +100,4 @@ const mapStateToProps = (state, ownProps) => {
     return {visible: state.awardVisible, selectedAwardId: state.selectedAwardId};
 };
 
-export default connect(mapStateToProps, { toggleAwardPopup, selectAward })(AwardPopup);
+export default connect(mapStateToProps, { selectAward })(AwardPopup);

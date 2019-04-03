@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { currentBandFetch, fetchArtists, fetchBands, fetchSponsors } from '../actions';
 import { Actions } from 'react-native-router-flux';
 
-
 class HomeView extends Component{
 
     componentWillMount(){

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import {
     currentBandFetch,
     getCurrentBand,
+    fetchAll,
     fetchArtists,
     fetchBands,
     fetchSponsors /*, getBandIndexById */
@@ -13,6 +14,7 @@ import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
     componentWillMount() {
+        this.props.fetchAll();
         // this.props.currentBandFetch();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
@@ -29,7 +31,7 @@ class HomeView extends Component {
     }
 
     onBandsPressed() {
-        this.props.fetchBands();
+        // this.props.fetchBands();
         Actions.listData({ title: "Bands", page: "band" });
     }
 
@@ -150,5 +152,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ }
+    { currentBandFetch, getCurrentBand, fetchAll, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ }
 )(HomeView);

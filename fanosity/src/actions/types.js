@@ -6,6 +6,7 @@ export const GET_CURRENT_BAND = "get_current_band";
 export const SELECT_DATA_ITEM = "select_data_item";
 export const DESELECT_DATA_ITEM = "deselect_award";
 export const TOGGLE_AWARD_VIEW = "toggle_award_view";
+export const FETCH_ALL = "fetchAll";
 export const FETCH_ARTISTS = "fetch_artists";
 export const FETCH_BANDS = "fetch_bands";
 export const FETCH_SPONSORS = "fetch_sponsors";

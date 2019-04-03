@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FlatList, View, Text } from "react-native";
-import { ItemForList } from "./ItemForList";
+import { ItemForList } from "../ItemForList";
 
 class ArtistsList extends Component {
     componentDidMount() {}

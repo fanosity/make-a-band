@@ -1,6 +1,7 @@
 import {
     CURRENT_BAND_PLAYING_UPDATE,
     CURRENT_BAND_FETCH_SUCCESS,
+    FETCH_ALL,
     FETCH_ARTISTS,
     FETCH_BANDS,
     FETCH_SPONSORS,
@@ -10,6 +11,12 @@ import {
 } from "./types";
 import firebase from "firebase";
 import { Actions } from "react-native-router-flux";
+
+export const fetchAll = () => {
+    return {
+        type: FETCH_ALL
+    };
+};
 
 export const fetchArtists = () => {
     return {
@@ -61,5 +68,5 @@ export const getCurrentBand = () => {
     return {
         type: GET_CURRENT_BAND,
         payload: 6 // Replace with api call.
-    }
-}
+    };
+};

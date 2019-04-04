@@ -14,7 +14,7 @@ import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
     componentWillMount() {
-        this.props.fetchAll();
+        // this.props.fetchAll();
         // this.props.currentBandFetch();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
@@ -32,6 +32,7 @@ class HomeView extends Component {
 
     onBandsPressed() {
         // this.props.fetchBands();
+        // this.props.fetchAll();
         Actions.listData({ title: "Bands", page: "band" });
     }
 
@@ -147,7 +148,7 @@ const styles = {
 
 const mapStateToProps = state => {
     const { currentBand } = state.band;
-    return { currentBand, data: state.data.data };
+    return { currentBand, bands: state.data.bands, artists: state.data.artists, sponsors: state.data.sponsors };
 };
 
 export default connect(

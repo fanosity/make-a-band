@@ -6,10 +6,10 @@ import {
     ADD_AWARD,
     GET_BAND_INDEX_BY_ID
 } from "../actions/types";
-import artists from "../data/Artists.json";
 import bands from "../data/Bands.json";
+import artists from "../data/Artists.json";
 
-const INITIAL_STATE = { data: [], bands: [], currentPage: "", givenAwards: {} };
+const INITIAL_STATE = { data: [], bands: [], artists: [], sponsors: [], currentPage: "", givenAwards: {} };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {

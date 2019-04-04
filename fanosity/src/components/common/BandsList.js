@@ -7,10 +7,11 @@ class BandsList extends Component {
         var initialItem = this.props.data.find(item => item.id == this.props.initialScrollIndex);
 
         if (initialItem != null) {
-            this.props.deselectDataItem();
+            // this.props.deselectDataItem();
             this.props.selectDataItem(initialItem);
         } else {
-            this.props.deselectDataItem();
+            // this.props.deselectDataItem();
+            this.props.selectDataItem(-1);
         }
     }
 

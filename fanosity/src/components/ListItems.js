@@ -4,20 +4,12 @@ import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
-import { currentBandFetch, getCurrentBand, fetchBands, selectDataItem, deselectDataItem } from "../actions";
+import { currentBandFetch, getCurrentBand, fetchAll, fetchBands, selectDataItem } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class ListItems extends Component {
     componentWillMount() {
-        // var initialItem = this.props.bands.find(item => item.id == this.props.scrollTo);
-
-        // if (initialItem != null) {
-        //     this.props.deselectDataItem();
-        //     this.props.selectDataItem(initialItem);
-        // } else {
-        //     this.props.deselectDataItem();
-        // }
-
+        this.props.fetchAll();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
     }
@@ -27,6 +19,25 @@ class ListItems extends Component {
 
     componentDidMount() {
         // if (this.props.scrollTo != null) this.flatListRef.scrollToIndex({ animated: true, index: this.props.scrollTo });
+    }
+
+    selectScrollTo() {
+        let initialItem = null;
+        if (this.props.page == "band") {
+            initialItem = this.props.bands.find(item => item.id == this.props.scrollTo);
+        } else if ( this.props.page == "artist") {
+            initialItem = this.props.artists.find(item => item.id == this.props.scrollTo);
+        } else if (this.props.page == "sponsor") {
+            initialItem = this.props.sponsors.find(item => item.id == this.props.scrollTo);
+        }
+
+        if (initialItem != null) {
+            // this.props.deselectDataItem();
+            this.props.selectDataItem(initialItem);
+        } else {
+            this.props.selectDataItem(-1);
+            // this.props.deselectDataItem();
+        }
     }
 
     manageCurrentBand({ currentBand }) {
@@ -47,11 +58,9 @@ class ListItems extends Component {
         }
         let scrollTo = this.currentBand.id;
 
-        // this.scrollToIndex(scrollTo);
-
         this.dataList.scrollTo(this.currentBand.id);
 
-        this.props.deselectDataItem();
+        // this.props.deselectDataItem();
         this.props.selectDataItem(this.props.bands.find(item => item.id == scrollTo));
     }
 
@@ -61,6 +70,18 @@ class ListItems extends Component {
                 animated: true,
                 index: this.props.bands.findIndex(item => item.id == id)
             });
+    }
+
+    selectData() {
+        if (this.props.page == "band") {
+            return this.props.bands;
+        } else if (this.props.page == "artist") {
+            return this.props.artists;
+        } else if (this.props.page == "sponsor") {
+            return this.props.sponsors;
+        } else {
+            return [];
+        }
     }
 
     renderItem(data) {
@@ -81,32 +102,16 @@ class ListItems extends Component {
     renderList() {
         return (
             <FlatList
-                data={this.bands}
+                data={() => this.selectData()}
                 renderItem={this.renderItem}
                 keyExtractor={data => data.id.toString()}
                 ref={ref => {
                     this.flatListRef = ref;
                 }}
-                initialNumToRender={this.bands.length}
+                // initialNumToRender={data.length}
                 initialScrollIndex={this.props.scrollTo}
             />
         );
-        // return (
-        //     <BandsList
-        //         data={this.props.bands}
-        //         initialScrollIndex={this.props.scrollTo}
-        //         ref={ref => {
-        //             this.dataList = ref;
-        //         }}
-        //     />
-        // );
-        //  if (this.props.page == "band") {
-        //     return (<BandsList data={this.props.bands} />);
-        // } else if (this.props.page == "artist") {
-        //     return (<ArtistsList data={this.props.artists} />);
-        // } else if (this.props.page == "sponsor") {
-        //     return (<SponsorsList data={this.props.sponsors} />);
-        // }
     }
 
     render() {
@@ -114,16 +119,6 @@ class ListItems extends Component {
             <BaseView baseViewStyle={{ backgroundColor: "#ddd" }}>
                 <View /*onLayout={() => this.onLayout()}*/ style={{ flex: 6 }}>
                     {this.renderList()}
-                    {/* <FlatList
-                        data={this.props.data}
-                        renderItem={this.renderItem}
-                        keyExtractor={data => data.id.toString()}
-                        ref={ref => {
-                            this.flatListRef = ref;
-                        }}
-                        initialNumToRender={this.props.data.length}
-                        initialScrollIndex={this.props.scrollTo}
-                    /> */}
                     <AwardPopup>{this.renderAwardTitle()}</AwardPopup>
                 </View>
                 <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
@@ -158,11 +153,11 @@ const styles = {
 
 const mapStateToProps = state => {
     const { currentBand } = state.band;
-    return { currentBand, selectedDataItem: state.selectedDataItem };
+    return { currentBand, selectedDataItem: state.selectedDataItem, bands: state.data.bands, artists: state.data.artists, sponsors: state.data.sponsors };
 };
 
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchBands, selectDataItem, deselectDataItem }
+    { currentBandFetch, getCurrentBand, fetchAll, fetchBands, selectDataItem }
 )(ListItems);

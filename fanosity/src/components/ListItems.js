@@ -4,7 +4,7 @@ import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
-import { currentBandFetch, getCurrentBand, fetchBands, selectDataItem, deselectDataItem } from "../actions";
+import { currentBandFetch, getCurrentBand, fetchBands, selectDataItem } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class ListItems extends Component {
@@ -12,10 +12,10 @@ class ListItems extends Component {
         var initialItem = this.props.data.find(item => item.id == this.props.scrollTo);
 
         if (initialItem != null) {
-            this.props.deselectDataItem();
+            // this.props.deselectDataItem();
             this.props.selectDataItem(initialItem);
         } else {
-            this.props.deselectDataItem();
+            // this.props.deselectDataItem();
         }
 
         // this.props.currentBandFetch();
@@ -51,7 +51,7 @@ class ListItems extends Component {
 
     scrollToIndex(id) {
         if (id != null) {
-            this.props.deselectDataItem();
+            // this.props.deselectDataItem();
             this.props.selectDataItem(this.props.data.find(item => item.id == id));
             this.flatListRef.scrollToIndex({ animated: true, index: this.props.data.findIndex(item => item.id == id) });
         }
@@ -126,5 +126,5 @@ const mapStateToProps = state => {
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchBands, selectDataItem, deselectDataItem }
+    { currentBandFetch, getCurrentBand, fetchBands, selectDataItem }
 )(ListItems);

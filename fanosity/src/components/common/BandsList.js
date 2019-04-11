@@ -31,7 +31,7 @@ class BandsList extends Component {
         return (
             <FlatList
                 data={this.props.data}
-                renderItem={this.renderItem}
+                renderItem={this.props.renderItem}
                 keyExtractor={data => data.id.toString()}
                 initialNumToRender={this.props.data.length}
                 initialScrollIndex={this.props.initialScrollIndex}
@@ -40,13 +40,4 @@ class BandsList extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return { data: state.data.data };
-};
-
 export { BandsList };
-
-// export default connent(mapStateToProps, {
-//     selectDataItem,
-//     deselectDataItem
-// })(BandsList);

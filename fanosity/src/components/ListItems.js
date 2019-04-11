@@ -81,7 +81,6 @@ class ListItems extends Component {
         } else {
             return [];
         }
-        // return this.props.bands;
     }
 
     renderItem(data) {
@@ -100,10 +99,13 @@ class ListItems extends Component {
     }
 
     renderList() {
+        return (<BandsList data={this.props.bands} renderItem={this.renderItem} />)
+
         return (
             <FlatList
                 data={this.selectData()}
                 renderItem={this.renderItem}
+                extraData={this.data}
                 keyExtractor={data => data.id.toString()}
                 ref={ref => {
                     this.listRef = ref;

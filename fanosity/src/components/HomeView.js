@@ -49,7 +49,7 @@ class HomeView extends Component {
     onNowPlayingPressed() {
         // Using id = 6 until api is fleshed out. Replace with grab of current band id.
         this.props.fetchBands();
-        Actions.listData({ title: "Bands", page: "band", scrollTo: 6 });
+        Actions.listData({ title: "Bands", page: "band", scrollTo: this.currentBand.id });
     }
 
     render() {

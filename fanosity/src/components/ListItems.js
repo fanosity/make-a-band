@@ -4,13 +4,14 @@ import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
-import { currentBandFetch, getCurrentBand, fetchAll, fetchBands, selectDataItem } from "../actions";
+import { currentBandFetch, getCurrentBand, fetchBands, selectDataItem } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class ListItems extends Component {
     componentWillMount() {
-        this.props.fetchAll();
+        // this.props.fetchAll();
         this.props.getCurrentBand();
+        this.selectScrollTo();
         this.manageCurrentBand(this.props);
     }
     componentWillReceiveProps(nextProps) {
@@ -49,19 +50,17 @@ class ListItems extends Component {
 
         // Needs to be a better way of identifying what's being displayed currently.
         if (this.props.page !== "band") {
-            this.props.fetchBands();
+            // this.props.fetchBands();
 
             // FIXME: For some reason none of these fully reset the page.
             // Actions.jump("listData", { title: "Bands", scrollTo: 6 });
             // Actions.popAndPush("listData", { title: "Bands", scrollTo: 6 });
             Actions.refresh({ title: "Bands", page: "band", scrollTo: this.currentBand.id });
         }
-        let scrollTo = this.currentBand.id;
 
-        this.dataList.scrollTo(this.currentBand.id);
-
-        // this.props.deselectDataItem();
-        this.props.selectDataItem(this.props.bands.find(item => item.id == scrollTo));
+        this.scrollToIndex(this.currentBand.id);
+        this.props.selectDataItem(-1);
+        this.props.selectDataItem(this.props.bands.find(item => item.id == this.currentBand.id));
     }
 
     scrollToIndex(id) {
@@ -82,6 +81,7 @@ class ListItems extends Component {
         } else {
             return [];
         }
+        // return this.props.bands;
     }
 
     renderItem(data) {
@@ -102,13 +102,12 @@ class ListItems extends Component {
     renderList() {
         return (
             <FlatList
-                data={() => this.selectData()}
+                data={this.selectData()}
                 renderItem={this.renderItem}
                 keyExtractor={data => data.id.toString()}
                 ref={ref => {
-                    this.flatListRef = ref;
+                    this.listRef = ref;
                 }}
-                // initialNumToRender={data.length}
                 initialScrollIndex={this.props.scrollTo}
             />
         );
@@ -159,5 +158,5 @@ const mapStateToProps = state => {
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchAll, fetchBands, selectDataItem }
+    { currentBandFetch, getCurrentBand, fetchBands, selectDataItem }
 )(ListItems);

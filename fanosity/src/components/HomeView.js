@@ -14,7 +14,7 @@ import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
     componentWillMount() {
-        // this.props.fetchAll();
+        this.props.fetchAll();
         // this.props.currentBandFetch();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
@@ -37,12 +37,12 @@ class HomeView extends Component {
     }
 
     onArtistsPressed() {
-        this.props.fetchArtists();
+        // this.props.fetchArtists();
         Actions.listData({ title: "Artists", page: "artist" });
     }
 
     onSponsorsPressed() {
-        this.props.fetchSponsors();
+        // this.props.fetchSponsors();
         Actions.listData({ title: "Sponsors", page: "sponsor" });
     }
 

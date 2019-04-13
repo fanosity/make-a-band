@@ -18,14 +18,6 @@ class App extends Component {
             storageBucket: "",
             messagingSenderId: "75644645782"
         };
-        // const config = {
-        //   apiKey: "AIzaSyAUWpPzxRxuUo4BBr2ONcw5zEZfTprNRnA",
-        //   authDomain: "make-a-band-test.firebaseapp.com",
-        //   databaseURL: "https://make-a-band-test.firebaseio.com",
-        //   projectId: "make-a-band-test",
-        //   storageBucket: "make-a-band-test.appspot.com",
-        //   messagingSenderId: "4010565251"
-        // };
         firebase.initializeApp(config);
     }
 

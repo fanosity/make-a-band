@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { BandsList, ArtistsList, SponsorsList, NowPlayingBottomBar, BaseView } from "./common";
+import { NowPlayingBottomBar, BaseView } from "./common";
 import { FlatList, View, Text } from "react-native";
 import { connect } from "react-redux";
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
-import { currentBandFetch, getCurrentBand, fetchBands, selectDataItem } from "../actions";
+import { currentBandFetch, getCurrentBand, selectDataItem } from "../actions";
 import { Actions } from "react-native-router-flux";
 
-class ListItems extends Component {
+class SponsorsList extends Component {
     componentWillMount() {
-        // this.props.fetchAll();
         this.props.getCurrentBand();
         this.selectScrollTo();
         this.manageCurrentBand(this.props);
@@ -18,19 +17,8 @@ class ListItems extends Component {
         this.manageCurrentBand(nextProps);
     }
 
-    componentDidMount() {
-        // if (this.props.scrollTo != null) this.flatListRef.scrollToIndex({ animated: true, index: this.props.scrollTo });
-    }
-
     selectScrollTo() {
-        let initialItem = null;
-        if (this.props.page == "band") {
-            initialItem = this.props.bands.find(item => item.id == this.props.scrollTo);
-        } else if (this.props.page == "artist") {
-            initialItem = this.props.artists.find(item => item.id == this.props.scrollTo);
-        } else if (this.props.page == "sponsor") {
-            initialItem = this.props.sponsors.find(item => item.id == this.props.scrollTo);
-        }
+        let initialItem = this.props.sponsors.find(item => item.id == this.props.scrollTo);
 
         if (initialItem != null) {
             this.props.selectDataItem(initialItem);
@@ -44,42 +32,15 @@ class ListItems extends Component {
     }
 
     onNowPlayingPressed() {
-        // Using id = 6 until api is fleshed out. Replace with grab of current band id.
-
-        // Needs to be a better way of identifying what's being displayed currently.
-        if (this.props.page !== "band") {
-            // this.props.fetchBands();
-
-            // FIXME: For some reason none of these fully reset the page.
-            // Actions.jump("listData", { title: "Bands", scrollTo: 6 });
-            // Actions.popAndPush("listData", { title: "Bands", scrollTo: 6 });
-            Actions.refresh({ title: "Bands", page: "band", scrollTo: this.currentBand.id });
-        }
-
-        this.scrollToIndex(this.currentBand.id);
-        this.props.selectDataItem(-1);
-        this.props.selectDataItem(this.props.bands.find(item => item.id == this.currentBand.id));
+        Actions.replace("bandsView", { scrollTo: this.currentBand.id });
     }
 
     scrollToIndex(id) {
-        this.listRef.scrollToIndex(this.props.bands.findIndex(item => item.id == id));
-        // if (id != null)
-        //     this.listRef.scrollToIndex({
-        //         animated: true,
-        //         index: this.props.bands.findIndex(item => item.id == id)
-        //     });
-    }
-
-    selectData() {
-        if (this.props.page == "band") {
-            return this.props.bands;
-        } else if (this.props.page == "artist") {
-            return this.props.artists;
-        } else if (this.props.page == "sponsor") {
-            return this.props.sponsors;
-        } else {
-            return [];
-        }
+        if (id != null)
+            this.listRef.scrollToIndex({
+                animated: true,
+                index: this.props.sponsors.findIndex(item => item.id == id)
+            });
     }
 
     renderItem(data) {
@@ -99,26 +60,14 @@ class ListItems extends Component {
 
     renderList() {
         return (
-            <BandsList
-                data={this.props.bands}
-                renderItem={this.renderItem}
-                ref={ref => {
-                    this.listRef = ref;
-                }}
-                initialScrollIndex={this.props.scrollTo}
-                selectDataItem={this.props.selectDataItem}
-            />
-        );
-
-        return (
             <FlatList
-                data={this.selectData()}
+                data={this.props.sponsors}
                 renderItem={this.renderItem}
-                extraData={this.data}
                 keyExtractor={data => data.id.toString()}
                 ref={ref => {
                     this.listRef = ref;
                 }}
+                initialNumToRender={this.props.sponsors.length}
                 initialScrollIndex={this.props.scrollTo}
             />
         );
@@ -175,5 +124,5 @@ const mapStateToProps = state => {
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchBands, selectDataItem }
-)(ListItems);
+    { currentBandFetch, getCurrentBand, selectDataItem }
+)(SponsorsList);

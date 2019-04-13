@@ -12,4 +12,3 @@ export const FETCH_BANDS = "fetch_bands";
 export const FETCH_SPONSORS = "fetch_sponsors";
 export const SELECT_AWARD = "select_award";
 export const ADD_AWARD = "add_award";
-// export const GET_BAND_INDEX_BY_ID = "get_band_index_by_id";

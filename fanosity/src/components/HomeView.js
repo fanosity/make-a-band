@@ -2,14 +2,7 @@ import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
-import {
-    currentBandFetch,
-    getCurrentBand,
-    fetchAll,
-    fetchArtists,
-    fetchBands,
-    fetchSponsors /*, getBandIndexById */
-} from "../actions";
+import { currentBandFetch, getCurrentBand, fetchAll, fetchArtists, fetchBands, fetchSponsors } from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
@@ -31,25 +24,23 @@ class HomeView extends Component {
     }
 
     onBandsPressed() {
-        // this.props.fetchBands();
-        // this.props.fetchAll();
-        Actions.listData({ title: "Bands", page: "band" });
+        // Actions.listData({ title: "Bands", page: "band" });
+        Actions.bandsView();
     }
 
     onArtistsPressed() {
-        // this.props.fetchArtists();
-        Actions.listData({ title: "Artists", page: "artist" });
+        // Actions.listData({ title: "Artists", page: "artist" });
+        Actions.artistsView();
     }
 
     onSponsorsPressed() {
-        // this.props.fetchSponsors();
-        Actions.listData({ title: "Sponsors", page: "sponsor" });
+        // Actions.listData({ title: "Sponsors", page: "sponsor" });
+        Actions.sponsorsView();
     }
 
     onNowPlayingPressed() {
-        // Using id = 6 until api is fleshed out. Replace with grab of current band id.
-        this.props.fetchBands();
-        Actions.listData({ title: "Bands", page: "band", scrollTo: this.currentBand.id });
+        Actions.bandsView({ scrollTo: this.currentBand.id });
+        // Actions.listData({ title: "Bands", page: "band", scrollTo: this.currentBand.id });
     }
 
     render() {
@@ -153,5 +144,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchAll, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ }
+    { currentBandFetch, getCurrentBand, fetchAll, fetchArtists, fetchBands, fetchSponsors }
 )(HomeView);

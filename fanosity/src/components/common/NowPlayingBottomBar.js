@@ -1,17 +1,13 @@
 import React from "react";
 import { View, Text, Dimensions, Image, TouchableOpacity } from "react-native";
 
-const NowPlayingBottomBar = ({ onPress, children, bandName }) => {
+const NowPlayingBottomBar = ({ onPress, children, band }) => {
     const { headerTextStyle, bandNameTextStyle, containerStyle } = styles;
+
+    if (band == null || band == undefined) return null;
+
     return (
         <TouchableOpacity style={containerStyle} onPress={onPress}>
-            {/* <View style={containerStyle}> */}
-            {/* <TouchableOpacity style={{ flex: 1, alignSelf: "center", padding: 5 }} onPress={onPress}>
-                <Image
-                    style={{ resizeMode: "stretch", height: 80 }}
-                    source={require("../../image/example_band_thumbnail.png")}
-                />
-            </TouchableOpacity> */}
             <View style={{ flex: 1, alignSelf: "center", padding: 5 }}>
                 <Image
                     style={{
@@ -30,7 +26,7 @@ const NowPlayingBottomBar = ({ onPress, children, bandName }) => {
                 }}
             >
                 <Text style={headerTextStyle}>{children}</Text>
-                <Text style={bandNameTextStyle}>{bandName}</Text>
+                <Text style={bandNameTextStyle}>{band.title}</Text>
             </View>
             {/* </View> */}
         </TouchableOpacity>

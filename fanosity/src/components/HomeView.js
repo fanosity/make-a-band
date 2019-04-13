@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
-import { currentBandFetch, getCurrentBand, fetchArtists, fetchBands, fetchSponsors /*, getBandIndexById */ } from "../actions";
+import {
+    currentBandFetch,
+    getCurrentBand,
+    fetchArtists,
+    fetchBands,
+    fetchSponsors /*, getBandIndexById */
+} from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
@@ -10,7 +16,6 @@ class HomeView extends Component {
         // this.props.currentBandFetch();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
-
     }
 
     componentWillUpdate() {}
@@ -41,7 +46,7 @@ class HomeView extends Component {
     onNowPlayingPressed() {
         // Using id = 6 until api is fleshed out. Replace with grab of current band id.
         this.props.fetchBands();
-        Actions.listData({ title: "Bands", scrollTo: 6 });
+        Actions.listData({ title: "Bands", scrollTo: this.currentBand.id });
     }
 
     render() {
@@ -101,7 +106,7 @@ class HomeView extends Component {
                     </View>
                 </View>
 
-                <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
+                <NowPlayingBottomBar band={this.currentBand} onPress={this.onNowPlayingPressed.bind(this)}>
                     Now playing:
                 </NowPlayingBottomBar>
             </BaseView>

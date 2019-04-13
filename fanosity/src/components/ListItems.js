@@ -51,7 +51,7 @@ class ListItems extends Component {
 
     scrollToIndex(id) {
         if (id != null) {
-            // this.props.deselectDataItem();
+            this.props.selectDataItem(-1);
             this.props.selectDataItem(this.props.data.find(item => item.id == id));
             this.flatListRef.scrollToIndex({ animated: true, index: this.props.data.findIndex(item => item.id == id) });
         }
@@ -88,7 +88,7 @@ class ListItems extends Component {
                     />
                     <AwardPopup>{this.renderAwardTitle()}</AwardPopup>
                 </View>
-                <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
+                <NowPlayingBottomBar band={this.currentBand} onPress={this.onNowPlayingPressed.bind(this)}>
                     Now playing:
                 </NowPlayingBottomBar>
             </BaseView>

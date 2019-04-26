@@ -10,7 +10,22 @@ import {
     // GET_BAND_INDEX_BY_ID
 } from "./types";
 import firebase from "firebase";
+import client from "../client";
 import { Actions } from "react-native-router-flux";
+import { getBands } from "../graphql/queries";
+
+export const fetchBands = aspect => {
+    return dispatch => {
+        client.query({
+            query: getBands,
+            variables: { aspect: aspect }
+        }).then((response) => {
+            if (response.data) {
+                dispatch( { type: FETCH_BANDS, payload: response.data.getBandsByEvent });
+            }
+        })
+    };
+};
 
 export const fetchAll = () => {
     return {
@@ -24,16 +39,9 @@ export const fetchArtists = () => {
     };
 };
 
-export const fetchBands = () => {
-    return {
-        type: FETCH_BANDS
-    };
-};
-
-// export const getBandIndexById = bandId => {
+// export const fetchBands = () => {
 //     return {
-//         type: GET_BAND_INDEX_BY_ID,
-//         payload: bandId
+//         type: FETCH_BANDS
 //     };
 // };
 

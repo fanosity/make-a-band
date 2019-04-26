@@ -18,7 +18,7 @@ export default (state = INITIAL_STATE, action) => {
         case FETCH_ARTISTS:
             return { ...state, artists: artists, currentPage: "artists" };
         case FETCH_BANDS:
-            return { ...state, bands: bands, currentPage: "bands" };
+            return { ...state, bands: action.payload, currentPage: "bands" };
         // case GET_BAND_INDEX_BY_ID:
         //     return {
         //         ...state,

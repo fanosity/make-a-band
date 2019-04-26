@@ -2,12 +2,24 @@ import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
 import { View, Image, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
-import { currentBandFetch, getCurrentBand, fetchAll, fetchArtists, fetchBands, fetchSponsors } from "../actions";
+import {
+    currentBandFetch,
+    getCurrentBand,
+    fetchAll,
+    fetchArtists,
+    fetchBands,
+    fetchSponsors
+} from "../actions";
 import { Actions } from "react-native-router-flux";
 
 class HomeView extends Component {
     componentWillMount() {
         this.props.fetchAll();
+
+        /*  GraphQL test  */
+        this.props.fetchBands("1x1");
+        console.log(this.props.bands);
+
         // this.props.currentBandFetch();
         this.props.getCurrentBand();
         this.manageCurrentBand(this.props);
@@ -55,7 +67,10 @@ class HomeView extends Component {
 
                 <View style={styles.viewContainerStyle}>
                     <View style={{ flex: 1 }}>
-                        <TouchableOpacity style={styles.buttonStyle} onPress={this.onBandsPressed.bind(this)}>
+                        <TouchableOpacity
+                            style={styles.buttonStyle}
+                            onPress={this.onBandsPressed.bind(this)}
+                        >
                             <Image
                                 style={{
                                     resizeMode: "stretch",
@@ -70,7 +85,10 @@ class HomeView extends Component {
                     </View>
 
                     <View style={{ flex: 1 }}>
-                        <TouchableOpacity style={styles.buttonStyle} onPress={this.onArtistsPressed.bind(this)}>
+                        <TouchableOpacity
+                            style={styles.buttonStyle}
+                            onPress={this.onArtistsPressed.bind(this)}
+                        >
                             <Image
                                 style={{
                                     resizeMode: "stretch",
@@ -85,7 +103,10 @@ class HomeView extends Component {
                     </View>
 
                     <View style={{ flex: 1 }}>
-                        <TouchableOpacity style={styles.buttonStyle} onPress={this.onSponsorsPressed.bind(this)}>
+                        <TouchableOpacity
+                            style={styles.buttonStyle}
+                            onPress={this.onSponsorsPressed.bind(this)}
+                        >
                             <Image
                                 style={{
                                     resizeMode: "stretch",
@@ -100,7 +121,10 @@ class HomeView extends Component {
                     </View>
                 </View>
 
-                <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
+                <NowPlayingBottomBar
+                    bandName={this.currentBand.title}
+                    onPress={this.onNowPlayingPressed.bind(this)}
+                >
                     Now playing:
                 </NowPlayingBottomBar>
             </BaseView>
@@ -139,10 +163,22 @@ const styles = {
 
 const mapStateToProps = state => {
     const { currentBand } = state.band;
-    return { currentBand, bands: state.data.bands, artists: state.data.artists, sponsors: state.data.sponsors };
+    return {
+        currentBand,
+        bands: state.data.bands,
+        artists: state.data.artists,
+        sponsors: state.data.sponsors
+    };
 };
 
 export default connect(
     mapStateToProps,
-    { currentBandFetch, getCurrentBand, fetchAll, fetchArtists, fetchBands, fetchSponsors }
+    {
+        currentBandFetch,
+        getCurrentBand,
+        fetchAll,
+        fetchArtists,
+        fetchBands,
+        fetchSponsors
+    }
 )(HomeView);

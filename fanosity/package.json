@@ -7,8 +7,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "apollo-boost": "^0.3.1",
     "firebase": "^5.8.6",
+    "graphql": "^14.2.1",
     "react": "^16.8.3",
+    "react-apollo": "^2.5.5",
     "react-native": "^0.59.0",
     "react-native-drawer": "^2.5.1",
     "react-native-firebase": "^5.2.3",

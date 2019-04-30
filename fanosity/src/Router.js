@@ -1,13 +1,14 @@
 import React, { Component } from "react";
+import { Scene, Router, Stack, Drawer } from "react-native-router-flux";
 import HomeView from "./components/HomeView";
 import LoginPage from "./components/LoginPage";
 import ListItems from "./components/ListItems";
 import BandsList from "./components/BandsList";
 import ArtistsList from "./components/ArtistsList";
 import SponsorsList from "./components/SponsorsList";
-import { Scene, Router, Stack, Drawer } from "react-native-router-flux";
-import MenuIcon from "./image/hamburger_menu.png";
 import DrawerContent from "./components/DrawerContent";
+import ScanBallot from "./components/ScanBallot";
+import MenuIcon from "./image/hamburger_menu.png";
 
 class RouterComponent extends Component {
     stateHandler = (prevState, newState, action) => {
@@ -29,7 +30,7 @@ class RouterComponent extends Component {
                         <Stack key="auth" titleStyle={{ alignSelf: "center", flex: 1, textAlign: "center" }}>
                             <Scene
                                 key="login"
-                                component={LoginPage}
+                                component={ScanBallot}
                                 initial
                                 title="Select Event"
                                 navigationBarStyle={styles.navBarStyle}

@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 
 export default class LoginWithAccount extends Component {
     onLogin = () => {
-        guardian.loginWithEmailAndPassword('steamedcotton@gmail.com', 'ghost$hip')
+        guardian.loginWithEmailAndPassword('steamedcotton@gmail.com', '')
             .then(() => {
                 Actions.main();
             })

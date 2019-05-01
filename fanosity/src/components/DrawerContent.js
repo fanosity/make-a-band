@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, View, ViewPropTypes, TouchableOpacity, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { BaseView, Placemat } from './common';
+import { BaseView } from './common';
+import guardian from '../lib/AuthGuard';
 
 
 class DrawerContent extends React.Component {
@@ -14,6 +15,10 @@ class DrawerContent extends React.Component {
   EventHomeClicked(){
     Actions.popTo('homeView');
   }
+
+  onLogout = () => {
+      guardian.logout();
+  };
 
   render() {
     return (
@@ -38,6 +43,13 @@ class DrawerContent extends React.Component {
                 <Text style={styles.textStyle}>Event Home</Text>
             </TouchableOpacity>
           </View>
+
+            <View style={{flexDirection: 'row'}}>
+                <Image style={styles.iconStyle} source={require('../image/event_home_icon.png')} />
+                <TouchableOpacity style={styles.buttonStyle} onPress={this.onLogout} >
+                    <Text style={styles.textStyle}>Logout</Text>
+                </TouchableOpacity>
+            </View>
         </View>
       </BaseView>
     );
@@ -76,7 +88,7 @@ const styles = {
         width: 35,
         paddingLeft: 10
     }
-}
+};
 
 
 export default DrawerContent;

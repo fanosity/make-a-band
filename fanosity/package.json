@@ -7,8 +7,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-cache-persist": "^0.1.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link": "^1.2.11",
+    "apollo-link-error": "^1.1.10",
+    "apollo-link-http": "^1.5.14",
+    "axios": "^0.18.0",
     "firebase": "^5.8.6",
+    "graphql": "^14.2.1",
     "react": "^16.8.3",
+    "react-apollo": "^2.5.5",
     "react-native": "^0.59.3",
     "react-native-camera": "^2.6.0",
     "react-native-drawer": "^2.5.1",

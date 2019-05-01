@@ -1,19 +1,30 @@
 import React, { Component } from "react";
-import { Scene, Router, Stack, Drawer } from "react-native-router-flux";
+import { Scene, Router, Stack, Drawer, Actions } from "react-native-router-flux";
 import HomeView from "./components/HomeView";
-import LoginPage from "./components/LoginPage";
 import ListItems from "./components/ListItems";
 import BandsList from "./components/BandsList";
 import ArtistsList from "./components/ArtistsList";
 import SponsorsList from "./components/SponsorsList";
 import DrawerContent from "./components/DrawerContent";
-import ScanBallot from "./components/ScanBallot";
 import MenuIcon from "./image/hamburger_menu.png";
+
+import LoginWithQrCode from "./components/LoginWithQrCode";
+import LoginWithAccount from "./components/LoginWithAccount";
+import Entry from "./components/Entry";
+import Events from "./components/Events";
+
+import { guardian } from './lib/AuthGuard';
 
 class RouterComponent extends Component {
     stateHandler = (prevState, newState, action) => {
         console.log("onStateChange: ACTION:", action);
     };
+
+    componentDidMount() {
+        if (guardian.isLoggedIn()) {
+            Actions.main();
+        }
+    }
 
     render() {
         return (
@@ -29,10 +40,22 @@ class RouterComponent extends Component {
                     >
                         <Stack key="auth" titleStyle={{ alignSelf: "center", flex: 1, textAlign: "center" }}>
                             <Scene
-                                key="login"
-                                component={ScanBallot}
+                                key="entry"
+                                component={Entry}
                                 initial
-                                title="Select Event"
+                                title="Welcome to Fanosity!"
+                                navigationBarStyle={styles.navBarStyle}
+                            />
+                            <Scene
+                                key="loginWithAccount"
+                                component={LoginWithAccount}
+                                title="Sign into Fanosity"
+                                navigationBarStyle={styles.navBarStyle}
+                            />
+                            <Scene
+                                key="loginWithBallotQrCode"
+                                component={LoginWithQrCode}
+                                title="Scan Event Ballot"
                                 navigationBarStyle={styles.navBarStyle}
                             />
                         </Stack>
@@ -43,8 +66,11 @@ class RouterComponent extends Component {
                             navigationBarStyle={styles.navBarStyle}
                             title="Make A Band 2019"
                         >
+
+                            <Scene key="events" component={Events} initial />
+
                             {/* place in renderBackButton={()=>{}} so Actions.main({onBack: () => {...}}) will work. */}
-                            <Scene key="homeView" component={HomeView} initial />
+                            <Scene key="homeView" component={HomeView} />
                             <Scene key="listData" component={ListItems} />
                             <Scene key="bandsView" component={BandsList} title="Bands" />
                             <Scene key="artistsView" component={ArtistsList} title="Artists" />

@@ -3,38 +3,41 @@ import { TouchableOpacity, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions';
 import { BaseView, Placemat, Button } from './common';
+import { Actions } from 'react-native-router-flux';
 
 
-class LoginPage extends Component{
-
-    onLoginPress(){
-        this.props.loginUser();
-    }
+class Events extends Component{
+    onEventSelect = () => {
+        Actions.homeView();
+    };
 
     render(){
-        const { backdrop } = styles;
+        const { backdrop, eventImage } = styles;
         return(
             <BaseView>
                 <Placemat style={{padding: 0}}>
-                    <TouchableOpacity style={backdrop} onPress={this.onLoginPress.bind(this)}>
-                        <ImageBackground style={{flex: 1, resizeMode: "stretch", height: 120}} source={require('../image/mab_banner.png')} />
+                    <TouchableOpacity style={backdrop} onPress={this.onEventSelect}>
+                        <ImageBackground style={eventImage} source={require('../image/mab_banner.png')} />
                     </TouchableOpacity>
-                    
                 </Placemat>
             </BaseView>
-
         );
     }
 }
 
 const styles = {
     backdrop: {
-        flex:1,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: '100%',
         height: 160
+    },
+    eventImage: {
+        flex: 1,
+        resizeMode: 'stretch',
+        height: 120
     }
 };
 
-export default connect(null, { loginUser })(LoginPage);
+export default connect(null, { loginUser })(Events);

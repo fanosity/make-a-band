@@ -1,11 +1,24 @@
 import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView } from "./common";
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, Text, ActivityIndicator } from 'react-native';
 import { connect } from "react-redux";
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import ItemForList from "./ItemForList";
 import AwardPopup from "./AwardPopup";
 import { currentBandFetch, getCurrentBand, selectDataItem } from "../actions";
 import { Actions } from "react-native-router-flux";
+
+const bandQuery = gql`{
+  bands: getBandsByEvent(eventId: "event_2015_bend-make-a-band") {
+    name
+    bandId
+    primaryImage(aspect: "16x9", maxWidth: 600) {
+      url
+    }
+  }
+}`;
 
 class BandsList extends Component {
     componentWillMount() {
@@ -45,8 +58,19 @@ class BandsList extends Component {
             });
     }
 
-    renderItem(data) {
-        return <ItemForList data={data.item} />;
+    renderItem({ item }) {
+        // id, title, desc, image
+
+        const bandData = {
+            id: item.bandId,
+            title: item.name,
+            desc: item.name,
+            image: { uri: item.primaryImage.url }
+        };
+
+        console.log(bandData);
+
+        return <ItemForList data={bandData} />;
     }
 
     renderAwardTitle() {
@@ -61,15 +85,25 @@ class BandsList extends Component {
     }
 
     renderList() {
+        const { data: { bands, loading } } = this.props;
+
+        if (loading) {
+            return (
+                <View style={[styles.container, styles.horizontal]}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            );
+        }
+
         return (
             <FlatList
-                data={this.props.bands}
+                data={bands}
                 renderItem={this.renderItem}
-                keyExtractor={data => data.id.toString()}
+                keyExtractor={(band) => band.bandId.toString()}
                 ref={ref => {
                     this.listRef = ref;
                 }}
-                initialNumToRender={this.props.bands.length}
+                initialNumToRender={bands.length}
                 initialScrollIndex={this.props.scrollTo}
             />
         );
@@ -92,7 +126,7 @@ class BandsList extends Component {
     onLayout() {
         this.scrollToIndex(this.props.scrollTo);
         this.props.selectDataItem(-1);
-        this.props.selectDataItem(this.props.bands.find(item => item.id == this.currentBand.id));
+        this.props.selectDataItem(this.props.bands.find((item) => item.id == this.currentBand.id));
     }
 }
 
@@ -111,6 +145,15 @@ const styles = {
         flexDirection: "row",
         height: 45,
         flex: 1
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
     }
 };
 
@@ -126,7 +169,7 @@ const mapStateToProps = state => {
 };
 
 // connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
-export default connect(
-    mapStateToProps,
-    { currentBandFetch, getCurrentBand, selectDataItem }
-)(BandsList);
+export default graphql(bandQuery)
+    (connect(mapStateToProps, { currentBandFetch, getCurrentBand, selectDataItem })
+    (BandsList)
+);

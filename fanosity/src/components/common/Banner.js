@@ -2,20 +2,20 @@ import React from 'react';
 import {View, TouchableWithoutFeedback, ImageBackground, Text} from 'react-native';
 
 const Banner = ({title, desc, onPress, image}) =>{
-    
+
     const { titleStyle, descStyle, dataContainerStyle, backdrop } = styles;
 
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View >
-                <ImageBackground source = {image} style={backdrop}>
+                <ImageBackground source={image} style={backdrop}>
                     <View style={{paddingTop: 80}} >
                         <View style={dataContainerStyle}>
-                            
+
                             <Text style = {titleStyle}>
                                 {title}
                             </Text>
-                            
+
                             <Text style={descStyle}>
                                 {desc}
                             </Text>

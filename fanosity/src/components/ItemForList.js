@@ -3,7 +3,7 @@ import { Text, TouchableWithoutFeedback, View, LayoutAnimation, NativeModules, I
 import { Placemat, Button, Banner } from "./common";
 import { connect } from "react-redux";
 import { selectDataItem, toggleAwardPopup, selectAward } from "../actions";
-import * as images from "../image";
+// import * as images from "../image";
 
 const { UIManager } = NativeModules;
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -84,7 +84,6 @@ class ItemForList extends Component {
 
     render() {
         const { id, title, desc, image } = this.props.data;
-        const bannerImage = images[image];
 
         return (
             <View>
@@ -92,7 +91,7 @@ class ItemForList extends Component {
                     onPress={() => this.props.selectDataItem(this.props.data)}
                     title={title}
                     desc={desc}
-                    image={bannerImage}
+                    image={image}
                 />
                 {this.renderDescription()}
             </View>

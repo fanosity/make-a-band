@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { NowPlayingBottomBar, BaseView } from "./common";
+import React, { Component } from 'react';
 import { FlatList, View, Text, ActivityIndicator } from 'react-native';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import ItemForList from "./ItemForList";
-import AwardPopup from "./AwardPopup";
-import { currentBandFetch, getCurrentBand, selectDataItem } from "../actions";
-import { Actions } from "react-native-router-flux";
+import ItemForList from './ItemForList';
+import { NowPlayingBottomBar, BaseView } from './common';
+import AwardPopup from './AwardPopup';
+import { currentBandFetch, getCurrentBand, selectDataItem } from '../actions';
+
 
 const bandQuery = gql`{
   bands: getBandsByEvent(eventId: "event_2015_bend-make-a-band") {
@@ -21,46 +21,37 @@ const bandQuery = gql`{
 }`;
 
 class BandsList extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.getCurrentBand();
-        this.selectScrollTo();
-        this.manageCurrentBand(this.props);
-    }
-    componentWillReceiveProps(nextProps) {
-        this.manageCurrentBand(nextProps);
+        //this.selectScrollTo();
     }
 
     selectScrollTo() {
-        let initialItem = this.props.bands.find(item => item.id == this.props.scrollTo);
+        let initialItem = this.props.bands.find((item) => item.id === this.props.scrollTo);
 
-        if (initialItem != null) {
+        if (initialItem !== null) {
             this.props.selectDataItem(initialItem);
         } else {
             this.props.selectDataItem(-1);
         }
     }
 
-    manageCurrentBand({ currentBand }) {
-        this.currentBand = currentBand;
-    }
-
     onNowPlayingPressed() {
-        this.scrollToIndex(this.currentBand.id);
+        const { currentBand, bands } = this.props;
+        this.scrollToIndex(currentBand.id);
         this.props.selectDataItem(-1);
-        this.props.selectDataItem(this.props.bands.find(item => item.id == this.currentBand.id));
+        this.props.selectDataItem(bands.find((item) => item.id === currentBand.id));
     }
 
     scrollToIndex(id) {
-        if (id != null)
+        if (id !== null)
             this.listRef.scrollToIndex({
                 animated: true,
-                index: this.props.bands.findIndex(item => item.id == id)
+                index: this.props.bands.findIndex((item) => item.id === id)
             });
     }
 
     renderItem({ item }) {
-        // id, title, desc, image
-
         const bandData = {
             id: item.bandId,
             title: item.name,
@@ -68,17 +59,17 @@ class BandsList extends Component {
             image: { uri: item.primaryImage.url }
         };
 
-        console.log(bandData);
-
         return <ItemForList data={bandData} />;
     }
 
     renderAwardTitle() {
-        const awardText = "Award ";
+        const { selectedDataItem } = this.props;
+        const awardText = 'Award ';
+
         return (
             <View style={styles.awardTextContainerStyle}>
                 <Text style={styles.awardTextStyle}>{awardText}</Text>
-                <Text style={[styles.titleTextStyle, styles.awardTextStyle]}>{this.props.selectedDataItem.title}</Text>
+                <Text style={[styles.titleTextStyle, styles.awardTextStyle]}>{selectedDataItem.title}</Text>
                 <Text style={styles.awardTextStyle}>:</Text>
             </View>
         );
@@ -99,7 +90,7 @@ class BandsList extends Component {
             <FlatList
                 data={bands}
                 renderItem={this.renderItem}
-                keyExtractor={(band) => band.bandId.toString()}
+                keyExtractor={({ bandId }) => bandId.toString()}
                 ref={ref => {
                     this.listRef = ref;
                 }}
@@ -110,13 +101,14 @@ class BandsList extends Component {
     }
 
     render() {
+        const { currentBand } = this.props;
         return (
             <BaseView baseViewStyle={{ backgroundColor: "#ddd" }}>
                 <View /*onLayout={() => this.onLayout()}*/ style={{ flex: 6 }}>
                     {this.renderList()}
                     <AwardPopup>{this.renderAwardTitle()}</AwardPopup>
                 </View>
-                <NowPlayingBottomBar bandName={this.currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
+                <NowPlayingBottomBar bandName={currentBand.title} onPress={this.onNowPlayingPressed.bind(this)}>
                     Now playing:
                 </NowPlayingBottomBar>
             </BaseView>
@@ -124,9 +116,10 @@ class BandsList extends Component {
     }
 
     onLayout() {
+        const { currentBand } = this.props;
         this.scrollToIndex(this.props.scrollTo);
         this.props.selectDataItem(-1);
-        this.props.selectDataItem(this.props.bands.find((item) => item.id == this.currentBand.id));
+        this.props.selectDataItem(this.props.bands.find((item) => item.id === currentBand.id));
     }
 }
 
@@ -168,7 +161,6 @@ const mapStateToProps = state => {
     };
 };
 
-// connect() reaches to the provider, and returns the state to mapStateToProps, which filters the state to return.
 export default graphql(bandQuery)
     (connect(mapStateToProps, { currentBandFetch, getCurrentBand, selectDataItem })
     (BandsList)

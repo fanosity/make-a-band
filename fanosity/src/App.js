@@ -72,7 +72,6 @@ export default class App extends Component {
                 });
                 guardian.on('updatedToken', () => {
                     console.log('Tokens updated');
-                    //Actions.main();
                 });
                 this.setState({ guardianLoading: false })
             });

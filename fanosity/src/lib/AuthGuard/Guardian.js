@@ -349,7 +349,7 @@ export default class Guardian extends Common {
             return this.logout();
         }
 
-        const params = { refresh_token: refreshToken };
+        const params = { refreshToken };
 
         return axios.post(refreshUrl, params)
             .then(({ data }) => this.normalizeAuthorizationPayload(data))

@@ -42,7 +42,7 @@ export default class Config {
 
             // Persist storage
             storage: new AsyncStorageAuth(this),
-            storageKey: `${this.env}_authentication`
+            storageKey: 'fanauth'
         };
 
         this.settings = {

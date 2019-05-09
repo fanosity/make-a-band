@@ -3,17 +3,21 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { View, Text } from "react-native";
 import { ApolloProvider } from "react-apollo";
-import { ApolloClient } from "apollo-boost";
+import ApolloClient from "apollo-boost";
 import reducers from "./src/reducers";
 import firebase from "firebase";
 import ReduxThunk from "redux-thunk";
 import Router from "./src/Router";
-import client from "./src/client";
+// import client from "./src/client";
 
+export const client = new ApolloClient({
+    uri: "https://dev-next-api.fanosity.com/graphql"
+});
 
 const store = createStore(reducers,
     {},
-    applyMiddleware(ReduxThunk));
+        applyMiddleware(ReduxThunk)
+    );
 
 class App extends Component {
     componentWillMount() {
@@ -32,12 +36,10 @@ class App extends Component {
     render() {
         // wireup redux thunk. The 2nd arg is any initial state we want to pass in. Optional. Usually used for server-side rendering.
         return (
-            <ApolloProvider store={store} client={client}>
-                {/* <Provider
-                    store={store}
-                > */}
-                    <Router />
-                {/* </Provider> */}
+            <ApolloProvider client={client}>
+                <Provider store={store}>
+                <Router />
+                </Provider>
             </ApolloProvider>
         );
     }

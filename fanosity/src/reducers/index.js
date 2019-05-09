@@ -14,5 +14,5 @@ export default combineReducers({
     data: DataReducer,
     selectedDataItem: DataItemSelectionReducer,
     awardVisible: AwardPopupReducer,
-    selectedAwardId: AwardSelectionReducer
+    selectedAwardId: AwardSelectionReducer,
 });

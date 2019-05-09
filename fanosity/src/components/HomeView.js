@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NowPlayingBottomBar, BaseView, Placemat } from "./common";
-import { View, Image, TouchableOpacity, Text } from "react-native";
+import { View, Image, TouchableOpacity, Text, ToastAndroid } from "react-native";
 import { connect } from "react-redux";
 import {
     currentBandFetch,
@@ -18,6 +18,7 @@ class HomeView extends Component {
 
         /*  GraphQL test  */
         this.props.fetchBands("1x1");
+        // ToastAndroid.show(this.props.bands[], 3);
         console.log(this.props.bands);
 
         // this.props.currentBandFetch();

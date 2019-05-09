@@ -10,7 +10,7 @@ import {
     // GET_BAND_INDEX_BY_ID
 } from "./types";
 import firebase from "firebase";
-import client from "../client";
+import { client } from "../../App";
 import { Actions } from "react-native-router-flux";
 import { getBands } from "../graphql/queries";
 
